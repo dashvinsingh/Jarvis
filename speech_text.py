@@ -152,38 +152,39 @@ def jarvis_speech(text, silent=False):
             #Addition
             if any(word in text for word in ['add', 'plus', 'addition', '+']):
                 #print(text)
-                addition(text)
+                addition(text, silent)
 
             #Subtraction
             if any(word in text for word in ['minus', 'subtrct', 'subtraction', 'subtrcted', 'difference']):
-                subtraction(text)
+                subtraction(text, silent)
 
             #Multiplication
             if any(word in text for word in ['multiply', 'times', 'x', 'product', 'mulitplied', 'multiplies', 'multiplying']):
-                multiplication(text)
+                multiplication(text, silent)
 
             #Power
             if any(word in text for word in ['to the power of', 'power of', 'power', 'square', 'sqaured', 'cube', 'cubed']):
-                power(text)
+                power(text, silent)
 
             #Square Root
             if any(word in text for word in ['square root', 'squared root', 'root']):
-                sqrt(text)
+                sqrt(text, silent)
 
             #SINE
             if any(word in text for word in ['sine', 'harmonic sign', 'sin', 'sign']):
-                sin(text)
+                sin(text, silent)
 
             #COSINE
             if any(word in text for word in ['cos', 'cosine', 'harmonic cosine', 'harmonic cos']):
-                cos(text)
+                cos(text, silent)
 
             #TANGENT
             if any(word in text for word in ['tan', 'tangent', 'harmonic tan', 'harmonic tangent']):
-                tan(text)
+                tan(text, silent)
         except:
             print('This is an invalid math command, please try again.')
-            system('say This is an invalid math command, please try again.')
+            if silent == False:
+                system('say This is an invalid math command, please try again.')
  #           jarvis_bot()
         
     
