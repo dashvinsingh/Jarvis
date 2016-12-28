@@ -8,6 +8,7 @@ from j_music import *
 from j_translate import *
 from j_math import *
 from j_weather import *
+from j_movies import *
 from alarm  import *
 import subprocess
 #from j_GUI import exit_jarvis_total
@@ -28,6 +29,8 @@ def jarvis_bot():
 
 silent = True
 def jarvis_speech(text, silent=False):
+
+    r = sr.Recognizer()
 ##    if silent == True:
 ##        system("osascript -e 'set volume output muted true'")
     try:
@@ -146,7 +149,8 @@ def jarvis_speech(text, silent=False):
             else:
                 print('Translating: ({0}) to {1}'.format(message,language))
                 translate(message, language.lower(), silent = True)
-    # DO MATH
+                
+    # DO MATH (With Silence)
 
         try:
             #Addition
@@ -279,6 +283,25 @@ def jarvis_speech(text, silent=False):
                         one_line_weather(city, True)
         except:
             print('Something might have gone wrong, please try again.')
+
+    #GET MOVIE INFO
+        if any(word in text for word in ['movie information', 'movie data', 'movie']):
+            if any(word in text for word in ['movie information', 'movie data', 'movie stats']):
+                if silent == False:
+                    print('Please tell me the name of the movie')
+                    system('say Please tell me the name of the movie')
+                    with sr.Microphone() as movie_source:
+                        movie_voice = r.listen(movie_source)
+                        movie_text = r.recognize_google(movie_voice)
+                        print('Here is the information for {0}\n'.format(movie_text.title()))
+                        get_m_basic_info(movie_text)
+                        system('say Here is the information you are looking for')
+                else:
+                    movie_text = input('INPUT the name of the movie.\n')
+                    print('Here is the information for {0}:\n'.format(movie_text.title()))
+                    get_m_basic_info(movie_text)
+
+                    
 
     #WHAT CAN YOU DO (With silence)
         if any(word in text for word in ['what can you do', 'functions', 'operations', 'can do', 'jarvis do']):
