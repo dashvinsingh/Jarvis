@@ -21,9 +21,10 @@ def append_dict():
     
     
 
-def translate(text, language):
+def translate(text, language, silent = False):
     x = translator.translate(text, final_dict[language][1])
     print(x)
-    system("say -v {0} {1}.".format(final_dict[language][0], x))
-    pass
-    
+    if silent == False:
+        system("say -v {0} {1}.".format(final_dict[language][0], x))
+        pass
+        

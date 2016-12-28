@@ -40,7 +40,7 @@ def subtraction(text):
 
 def multiplication(text):
     lst = extract_numbers(text)
-    ans = functools.reduce(operator.mul, new, 1)
+    ans = functools.reduce(operator.mul, lst, 1)
     return_answer(ans)
 
 def division(text):

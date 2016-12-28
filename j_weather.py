@@ -29,7 +29,7 @@ def get_weather_yahoo(woeid):
 def far_to_cel(temp):
     return (float(temp)-32)/1.8
 
-def one_line_weather(city):
+def one_line_weather(city, silent = False):
     woeid = get_woeid(city)
     data = get_weather_yahoo(woeid)
     try:
@@ -37,11 +37,18 @@ def one_line_weather(city):
         temp_c = round(far_to_cel(temp_f))
         condition = data['query']['results']['channel']['item']['condition']['text']
         if temp_c >= 0:
-            print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
-            system('say It is {0} degrees celcius and {1} outside in {2}'.format(temp_c, condition, city.title()))
+            if silent == False:
+                print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
+                system('say It is {0} degrees celcius and {1} outside in {2}'.format(temp_c, condition, city.title()))
+            else:
+                print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
         else:
-            print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
-            system('say it is negative {0} degrees celcius and {1} outside in {2}'.format(abs(temp_c), condition, city.title()))
+            if silent == False:
+                print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
+                system('say it is negative {0} degrees celcius and {1} outside in {2}'.format(abs(temp_c), condition, city.title()))
+            else:
+                print('It is {0}C and {1} outside in {2}'.format(temp_c, condition, city.title()))
+
     except:
         print('Unable to get weather information, please try again.')
 

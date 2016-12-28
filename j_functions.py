@@ -67,7 +67,7 @@ def date_today():
 def date_time():
     pass
 
-def google_search(search_text):
+def google_search(search_text, silent = False):
     #google search how to get away with murder
     lst = search_text.split()
     if 'google' in lst:
@@ -79,7 +79,8 @@ def google_search(search_text):
     search_text= ' '.join(lst)
     x = 'http://www.google.com/search?q={0}&btnG=Google+Search'.format(search_text)
     print('Searching for: ({0}) on Google'.format(search_text))
-    system("say 'Searching for: ({0}) on Google'".format(search_text))
+    if silent == False:
+        system("say 'Searching for: ({0}) on Google'".format(search_text))
     webbrowser.open(x)
 
 def quit_jarvis():
