@@ -41,19 +41,15 @@ def current_time():
     if hour > 12:
         hour_cus = hour - 12
         if mins < 10:
-            print('The time right now is: {0}:0{1} PM'.format(hour_cus, mins))
-            system('say The time right now is: {0}:0{1} PM'.format(hour_cus, mins))
+            return('The time right now is: {0}:0{1} PM'.format(hour_cus, mins))
         else:
-            print('The time right now is: {0}:{1} PM'.format(hour_cus, mins))
-            system('say The time right now is: {0}:{1} PM'.format(hour_cus, mins))        
+            return('The time right now is: {0}:{1} PM'.format(hour_cus, mins))
     else:
         hour_cus = hour
         if mins < 10:
-            print('The time right now is: {0}:0{1} AM'.format(hour, mins))
-            system('say The time right now is: {0}:0{1} AM'.format(hour, mins))
+            return('The time right now is: {0}:0{1} AM'.format(hour, mins))
         else:
-            print('The time right now is: {0}:{1} AM'.format(hour, mins))
-            system('say The time right now is: {0}:{1} AM'.format(hour, mins))
+            return('The time right now is: {0}:{1} AM'.format(hour, mins))
    
             
 
@@ -66,8 +62,7 @@ def date_today():
     day_eng = calendar.day_name[my_date.weekday()]
     month_eng = calendar.month_name[month]
     final_date = "{0}, {1} {2} {3}".format(day_eng,str(day),month_eng,str(year))
-    print('The date today is: {0}.'.format(final_date))
-    system('say The date today is: {0}.'.format(final_date))
+    return('The date today is: {0}.'.format(final_date))
 
 def date_time():
     pass
