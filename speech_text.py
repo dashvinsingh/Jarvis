@@ -20,7 +20,7 @@ def jarvis_bot():
     with sr.Microphone() as source:
         print('Jarvis Initializing!')
         #system('say Hi Dash! How can I help you today?')
-        system('afplay /Users/abhin/OneDrive\ -\ University\ of\ Toronto/CS108/Winter\ Projects/Python\ Projects/SpeechRec/Jarvis/siri1.mp3')
+        system('afplay /Users/abhin/OneDrive\ -\ University\ of\ Toronto/CS108/Winter\ Projects/Python\ Projects/SpeechRec/Jarvis/misc/siri1.mp3')
         audio = r.listen(source)
         text = r.recognize_google(audio).lower()
         jarvis_speech(text)

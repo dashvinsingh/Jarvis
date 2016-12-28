@@ -5,7 +5,7 @@ from j_functions import *
 import speech_recognition as sr
 import threading
 
-os.chdir('/Users/abhin/OneDrive - University of Toronto/CS108/Winter Projects/Python Projects/SpeechRec/Jarvis')
+os.chdir('/Users/abhin/OneDrive - University of Toronto/CS108/Winter Projects/Python Projects/SpeechRec/Jarvis/misc')
 
 r = sr.Recognizer()
 class Jarvis_GUI:
