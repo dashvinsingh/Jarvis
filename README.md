@@ -7,5 +7,6 @@ External Modules Used:
 >2. pyglet: Used for playing media
 >3. yweather: Used for getting weather information (Yahoo Weather)
 >4. microsofttranslator: Used for translating from English
+>5. tmdbsimple: Used for Movies and TV Shows' information
 
 
