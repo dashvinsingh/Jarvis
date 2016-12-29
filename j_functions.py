@@ -44,6 +44,11 @@ def current_time():
             return('The time right now is: {0}:0{1} PM'.format(hour_cus, mins))
         else:
             return('The time right now is: {0}:{1} PM'.format(hour_cus, mins))
+    elif hour == 12:
+        if mins < 10:
+            return('The time right now is: {0}:0{1} PM'.format(hour, mins))
+        else:
+            return('The time right now is: {0}:{1} PM'.format(hour, mins))
     else:
         hour_cus = hour
         if mins < 10:
