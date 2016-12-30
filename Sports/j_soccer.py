@@ -26,8 +26,10 @@ def list_leagues():
 def get_team_names():
     url = 'http://soccer.sportsopendata.net/v1/leagues/{0}/seasons/16-17/teams'.format(league)
     d = get_decoded_data(url)['data']['teams']
+    lst = []
     for item in d:
-        print(item['name'])
+        lst.append(item['name'])
+    return lst
 
 def get_standings():
     url = 'http://soccer.sportsopendata.net/v1/leagues/{0}/seasons/16-17/standings'.format(league)
@@ -84,12 +86,7 @@ def get_name(name):
 
 
 def next_game(team, days=1):
-    d = get_team_calendar(get_identifier(team))['data']['rounds']
-#    print(d)
-    lst = []
-    for item in d:
-        if compare_time(item['date_match'][:10]) and len(lst) < days:
-            lst.append("{0} vs {1} is going to be played on {2}".format(item['home_team'], item['away_team'], item['date_match'][:10]))
+    lst = next_game_com(team, days)
     for item in lst:
         print(item)
 
@@ -99,7 +96,7 @@ def next_game_raw(team, days=1):
     count = 1
     for i in range(len(d)):
         if compare_time(d[i]['date_match'][:10]) and len(ng.keys()) < days:
-            ng[count] = {'home': d[i]['home_team'], 'away': d[i]['away_team'], 'date': d[i]['date_match'][:10]}
+            ng[count] = {'home': d[i]['home_team'], 'away': d[i]['away_team'], 'date': d[i]['date_match'][:10], 'week':d[i]['name']}
             count += 1
     return ng
 
@@ -111,9 +108,9 @@ def next_game_com(team, days =1):
         gdate = (v['date'])
         game_day = date(int(gdate[0:4]), int(gdate[5:7]), int(gdate[8:10]))
         countdown = game_day-today
-        lst.append("{0} {1:^10}  {2:^5} {3:>5} {4:<5} ({5} days to go)".format(v['home'],'vs', v['away'],'on', v['date'], countdown.days))
+        lst.append("{0}  {1}  {2} {3} {4:>10} ({5} days to go)".format(v['home'],'vs', v['away'],'-', v['date'], countdown.days))
         #print("{0} {1:^10}  {2:^5} {3:>5} {4:<5} ({5} days to go)".format(v['home'],'vs', v['away'],'on', v['date'], countdown.days))
-    return lst
+    return lst #DO NOT CHANGE
 
 def get_score(team1, team2):
     d = get_team_calendar(get_identifier(team1))['data']['rounds']
@@ -180,6 +177,22 @@ def extract_match_num(text):
         return 1
     else:
         return new[0]
+
+def get_weekly_fixtures():
+    lst = get_team_names()
+    new_lst = []
+    d = next_game_raw('man united')
+    week = d[1]['week']
+    print("Getting fixtures for Gameweek {0}".format(week[6:]))
+    for item in lst:
+        next_game = next_game_com(item)
+        if next_game[0] not in new_lst:
+            new_lst.append(next_game[0])
+            #print(next_game[0])
+    new_lst = sorted(new_lst, key=len)
+    for p in new_lst: print(p)
+    #return new_lst 
+        
 
 def compare_time(input_d):
     """ str
