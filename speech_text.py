@@ -9,7 +9,9 @@ from j_translate import *
 from j_math import *
 from j_weather import *
 from j_movies import *
+from Sports.j_soccer import *
 from alarm  import *
+
 import subprocess
 #from j_GUI import exit_jarvis_total
 
@@ -286,7 +288,7 @@ def jarvis_speech(text, silent=False):
 
     #GET MOVIE INFO
         if any(word in text for word in ['movie information', 'movie data', 'movie']):
-            if any(word in text for word in ['movie information', 'movie data', 'movie stats']):
+            if any(word in text for word in ['movie information', 'movie data', 'movie stats', 'movie info']):
                 if silent == False:
                     print('Please tell me the name of the movie')
                     system('say Please tell me the name of the movie')
@@ -301,8 +303,60 @@ def jarvis_speech(text, silent=False):
                     print('Here is the information for {0}:\n'.format(movie_text.title()))
                     get_m_basic_info(movie_text)
 
-                    
+    #GET TV SHOW INFO
+        if any(word in text for word in ['tv information', 'tv data', 'tv']):
+            if any(word in text for word in ['tv information', 'tv data', 'tv stats', 'tv info', 'tv shows']):
+                if silent == False:
+                    print('Please tell me the name of the TV Show')
+                    system('say Please tell me the name of the TV Show')
+                    with sr.Microphone() as tv_source:
+                        tv_voice = r.listen(tv_source)
+                        tv_text = r.recognize_google(tv_voice)
+                        print('Here is the information for {0}\n'.format(tv_text.title()))
+                        get_tv_basic_info(tv_text)
+                        system('say Here is the information you are looking for')
+                else:
+                    tv_text = input('INPUT the name of the TV Show.\n')
+                    print('Here is the information for {0}:\n'.format(tv_text.title()))
+                    get_tv_basic_info(tv_text)
 
+    #English Premier League Information
+        if any(word in text for word in ['standings', 'team stats', 'stats', 'teams', 'soccer', 'football', 'english', 'league', 'games', 'next']):
+            #LEAGUE STANDINGS
+            if any(word in text for word in ['standings', 'table']):
+                if silent == False:
+                    print('Standings for the English Premier League')
+                    (get_standings())
+                    system('say Here are the current standings of the Premier League')
+                else:
+                    print('Standings for the English Premier League')
+                    get_standings()
+                
+            #TEAM STATS
+            if any(word in text for word in ['team', 'stats', 'information']):
+                team_name = extract_name(text)
+                print(get_team_stats(team_name))
+                if silent == False:
+                    system('say Here are the stats for {0}'.format(team_name))
+
+            if any(word in text for word in ['next match', 'next game', 'next','game', 'games']):
+                days = extract_match_num(text)
+                team_name = extract_name(text)
+                next_game_com(team_name, days)
+                if silent == False:
+                    system('say {0}'.format(next_game_com))
+                        
+        #RESULT (SCORE)            
+        if any(word in text for word in ['versus', 'score', 'vs']):
+            if any(word in text for word in ['versus', 'score', 'vs', 'and']):
+                fs = get_raw_score(extract_t1(text), extract_t2(text))
+                print("Final Score: {0} {1}-{2} {3}".format(fs['home'], fs[fs['home']], fs[fs['away']], fs['away']))
+                if silent == False:
+                    system('say Final Score: {0} {1} and {2} {3}'.format(fs['home'], fs[fs['home']], fs['away'], fs[fs['away']]))
+
+
+            
+           
     #WHAT CAN YOU DO (With silence)
         if any(word in text for word in ['what can you do', 'functions', 'operations', 'can do', 'jarvis do']):
             print("I can: \nPlay music\nOpen a Website\nTell the Date and Time\nTranslate from English\nGive Weather Data\nSet an Alarm\nGoogle Search\nDo Math")
