@@ -40,7 +40,7 @@ def get_standings():
 def extract_name(text):
     lst = []
     for item in text.split():
-        if item not in ['team','of', 'what', 'stats', 'score', 'information', 'table', 'form', 'info', 'next', 'game', 'when', 'is', 'the', 'what is']:
+        if item not in ['team','of', 'what', 'stats', 'score', 'information', 'table', 'form', 'info', 'next', 'game', 'games', 'when', 'is', 'the', 'what is'] and item.isalpha():
             lst.append(item)
     return ' '.join(lst)
 
@@ -105,14 +105,15 @@ def next_game_raw(team, days=1):
 
 def next_game_com(team, days =1):
     d = next_game_raw(team, days)
-
+    lst = []
     for k,v in d.items():
         today = date.today()
         gdate = (v['date'])
         game_day = date(int(gdate[0:4]), int(gdate[5:7]), int(gdate[8:10]))
         countdown = game_day-today
-        print("{0} {1:^10}  {2:^5} {3:>5} {4:<5} ({5} days to go)".format(v['home'],'vs', v['away'],'on', v['date'], countdown.days))
-
+        lst.append("{0} {1:^10}  {2:^5} {3:>5} {4:<5} ({5} days to go)".format(v['home'],'vs', v['away'],'on', v['date'], countdown.days))
+        #print("{0} {1:^10}  {2:^5} {3:>5} {4:<5} ({5} days to go)".format(v['home'],'vs', v['away'],'on', v['date'], countdown.days))
+    return lst
 
 def get_score(team1, team2):
     d = get_team_calendar(get_identifier(team1))['data']['rounds']

@@ -342,21 +342,27 @@ def jarvis_speech(text, silent=False):
             if any(word in text for word in ['next match', 'next game', 'next','game', 'games']):
                 days = extract_match_num(text)
                 team_name = extract_name(text)
-                next_game_com(team_name, days)
+                g_list = next_game_com(team_name, days)
+                for item in g_list:
+                    print(item)
                 if silent == False:
-                    system('say {0}'.format(next_game_com))
+                    string = g_list[len(g_list)-1]
+                    index = string.find('(')
+                    system('say {0} have {1} games in the next {2} days'.format(team_name.title(), days,string[index+1:string.find(' ',index)]))
                         
         #RESULT (SCORE)            
         if any(word in text for word in ['versus', 'score', 'vs']):
             if any(word in text for word in ['versus', 'score', 'vs', 'and']):
                 fs = get_raw_score(extract_t1(text), extract_t2(text))
-                print("Final Score: {0} {1}-{2} {3}".format(fs['home'], fs[fs['home']], fs[fs['away']], fs['away']))
-                if silent == False:
-                    system('say Final Score: {0} {1} and {2} {3}'.format(fs['home'], fs[fs['home']], fs['away'], fs[fs['away']]))
-
-
-            
-           
+                if type(fs) == dict:
+                    print("Final Score: {0} {1}-{2} {3}".format(fs['home'], fs[fs['home']], fs[fs['away']], fs['away']))
+                    if silent == False:
+                        system('say Final Score: {0} {1} and {2} {3}'.format(fs['home'], fs[fs['home']], fs['away'], fs[fs['away']]))
+                else:
+                    print(get_raw_score(extract_t1(text), extract_t2(text)))
+                    if silent == False:
+                          system('say {0}'.format('This Match has not started.'))
+                         
     #WHAT CAN YOU DO (With silence)
         if any(word in text for word in ['what can you do', 'functions', 'operations', 'can do', 'jarvis do']):
             print("I can: \nPlay music\nOpen a Website\nTell the Date and Time\nTranslate from English\nGive Weather Data\nSet an Alarm\nGoogle Search\nDo Math")
