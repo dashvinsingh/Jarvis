@@ -9,7 +9,7 @@ Jarvis can:
 - Surf the web
 - Give information on the EPL.
 
-![Jarvis]jv1.png
+![Jarvis](jv1.png)
 
 
 Modules Used:
